@@ -2,7 +2,7 @@ import json
 import os.path
 import sys
 
-def obter_dados():
+def obter_dados() -> None:
     '''
     Essa função carrega os dados dos produtos e retorna uma lista de dicionários, onde cada dicionário representa um produto.
     NÃO MODIFIQUE essa função.
@@ -11,11 +11,10 @@ def obter_dados():
         dados = json.loads(arq.read())
     return dados
 
-def listar_categorias(dados):
+def listar_categorias(dados: list) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
-    Essa função deverá retornar uma lista contendo todas as categorias dos diferentes produtos.
-    Cuidado para não retornar categorias repetidas.    
+    Essa função retorna uma lista contendo todas as categorias dos diferentes produtos.  
     '''
     ...
     categorias = []
@@ -23,15 +22,14 @@ def listar_categorias(dados):
         if not(dados[i]['categoria'] in categorias):
             categorias.append(dados[i]['categoria'])
     return categorias
-    # for elemento in categorias:
-    #     print(elemento.title())
 
 
-def listar_por_categoria(dados, categoria):
+
+def listar_por_categoria(dados: list, categoria: str) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
-    Essa função deverá retornar uma lista contendo todos os produtos pertencentes à categoria dada.
+    Essa função retorna uma lista contendo todos os produtos pertencentes à categoria dada.
     '''
     ...
     lista_categoria = []
@@ -40,15 +38,14 @@ def listar_por_categoria(dados, categoria):
             lista_categoria.append(dados[i])
     lista_categoria = sorted(lista_categoria, key = lambda x:float(x["preco"]), reverse = True)
     return lista_categoria
-    # for elemento in lista_categoria:
-    #     print(elemento)
+
     
 
-def produto_mais_caro(dados, categoria):
+def produto_mais_caro(dados: list, categoria: str) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
-    Essa função deverá retornar um dicionário representando o produto mais caro da categoria dada.
+    Essa função retorna um dicionário representando o produto mais caro da categoria dada.
     '''
     ...
     lista_mais_caro = []
@@ -57,16 +54,14 @@ def produto_mais_caro(dados, categoria):
             lista_mais_caro.append(dados[i])
     lista_mais_caro = sorted(lista_mais_caro, key = lambda x:float(x["preco"]), reverse = True) [:1]
     return lista_mais_caro
-    # print(f'O Produto mais caro da categoria "{categoria.title()}" é:\n', lista_mais_caro)
 
 
 
-
-def produto_mais_barato(dados, categoria):
+def produto_mais_barato(dados: list, categoria: str) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
     O parâmetro "categoria" é uma string contendo o nome de uma categoria.
-    Essa função deverá retornar um dicionário representando o produto mais caro da categoria dada.
+    Essa função retorna um dicionário representando o produto mais caro da categoria dada.
     '''
     ...
     lista_mais_barato = []
@@ -75,32 +70,33 @@ def produto_mais_barato(dados, categoria):
             lista_mais_barato.append(dados[i])
     lista_mais_barato = sorted(lista_mais_barato, key = lambda x:float(x["preco"])) [:1]
     return lista_mais_barato
-    # print(f'O Produto mais barato da categoria "{categoria.title()}" é:\n', lista_mais_barato)
 
-def top_10_caros(dados):
+
+def top_10_caros(dados: list) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
-    Essa função deverá retornar uma lista de dicionários representando os 10 produtos mais caros.
+    Essa função retornar uma lista de dicionários representando os 10 produtos mais caros.
     '''
     ...
     top_caros = sorted(dados, key = lambda x:float(x["preco"]), reverse = True) [:10]
     return top_caros
 
-    # for i in dados_organizados:
-    #     print (i)
 
-def top_10_baratos(dados):
+def top_10_baratos(dados: list) -> list:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
-    Essa função deverá retornar uma lista de dicionários representando os 10 produtos mais baratos.
+    Essa função retorna uma lista de dicionários representando os 10 produtos mais baratos.
     '''
     ...
     top_baratos = sorted(dados, key = lambda x:float(x["preco"])) [:10]
     return top_baratos
-    # for i in dados_organizados:
-    #     print (i)
 
-def categoria_validar(categoria):
+
+def categoria_validar(categoria: str) -> None:
+    '''
+    O parâmetro "categoria" é uma string contendo o nome de uma categoria.
+    Essa função valida se a categoria recebida consta na lista de dicionário.
+    '''
 
     categorias = listar_categorias(dados)
     while categoria not in categorias:
@@ -109,11 +105,11 @@ def categoria_validar(categoria):
     else:
         return categoria
 
-def menu(dados):
+def menu(dados: list) -> None:
     '''
     O parâmetro "dados" deve ser uma lista de dicionários representando os produtos.
-    Essa função deverá, em loop, realizar as seguintes ações:
-    - Exibir as seguintes opções:
+    Essa função, em loop, realizar as seguintes ações:
+    - Exibi as seguintes opções:
         1. Listar categorias
         2. Listar produtos de uma categoria
         3. Produto mais caro por categoria
@@ -121,11 +117,11 @@ def menu(dados):
         5. Top 10 produtos mais caros
         6. Top 10 produtos mais baratos
         0. Sair
-    - Ler a opção do usuário.
-    - No caso de opção inválida, imprima uma mensagem de erro.
-    - No caso das opções 2, 3 ou 4, pedir para o usuário digitar a categoria desejada.
-    - Chamar a função adequada para tratar o pedido do usuário e salvar seu retorno.
-    - Imprimir o retorno salvo. 
+    - Lê a opção do usuário.
+    - No caso de opção inválida, imprime uma mensagem de erro.
+    - No caso das opções 2, 3 ou 4, pede para o usuário digitar a categoria desejada.
+    - Chama a função adequada para tratar o pedido do usuário e salva seu retorno.
+    - Imprime o retorno salvo. 
     O loop encerra quando a opção do usuário for 0.
     '''
     ...
@@ -144,7 +140,7 @@ def menu(dados):
     while not (opcao == '0'):
         while not (opcao.isdigit() and opcao in opcoes):
             print('''\n Você digitou uma opção inválida!
-        Abaixo segue lista de opções válidas:
+        Abaixo segue a lista de opções válidas:
         1. Listar categorias
         2. Listar produtos de uma categoria
         3. Produto mais caro por categoria
@@ -177,8 +173,6 @@ def menu(dados):
                     print(f"O produto mais caro é o id: {lista_caro[i]['id']}. \nNo valor de R$ {lista_caro[i]['preco']}")
 
             elif opcao == '4':
-                # categoria = input('\nQual categoria você deseja escolher? ').lower()
-                # produto_mais_barato(dados, categoria)
                 categoria = input('\nQual categoria você deseja escolher? ').lower()
                 categoria = categoria_validar(categoria)
                 lista_barato = produto_mais_barato(dados, categoria)
